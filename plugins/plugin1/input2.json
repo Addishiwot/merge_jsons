@@ -1,0 +1,24 @@
+{
+  "dashboards": [
+    {
+      "_id": "cre_health_check_dashboard",
+      "title": "Cloud Routing Engine",
+      "useTimePicker": false,
+      "apps": ["healthCheckViewer"],
+      "order": 0,
+      "tiles": [
+        {
+          "xSize": 10,
+          "ySize": 3,
+          "widget": "routing_kpi"
+        },
+        {
+          "xSize": 10,
+          "ySize": 3,
+          "widget": "interface_metrics_kpi",
+          "zSize": 60
+        }
+      ]
+    }
+  ]
+}

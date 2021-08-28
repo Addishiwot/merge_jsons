@@ -1,0 +1,134 @@
+{
+    "widgets": [
+        {
+            "_id": "interface_metrics_kpi",
+            "widgetType": "table",
+            "title": "Interface Metrics KPIs",
+            "filterable": false,
+            "sortMode": "desc",
+            "sources": [
+                {
+                    "source": "interface_metrics_data",
+                    "vertical": false
+                }
+            ],
+            "columns": [
+                {
+                    "heading": "Name",
+                    "label": "label",
+                    "sortable": false
+                },
+                {
+                    "heading": "Now",
+                    "label": "0",
+                    "sortable": false,
+                    "formatter": "d3",
+                    "formatterOptions": {
+                        "specifier": ","
+                    },
+                    "align": "right"
+                },
+                {
+                    "heading": "1h ago",
+                    "label": "1",
+                    "sortable": false,
+                    "formatter": "d3",
+                    "formatterOptions": {
+                        "specifier": ","
+                    },
+                    "align": "right"
+                },
+                {
+                    "heading": "3h ago",
+                    "label": "2",
+                    "sortable": false,
+                    "formatter": "d3",
+                    "formatterOptions": {
+                        "specifier": ","
+                    },
+                    "align": "right"
+                },
+                {
+                    "heading": "6h ago",
+                    "label": "3",
+                    "sortable": false,
+                    "formatter": "d3",
+                    "formatterOptions": {
+                        "specifier": ","
+                    },
+                    "align": "right"
+                },
+                {
+                    "heading": "12h ago",
+                    "label": "4",
+                    "sortable": false,
+                    "formatter": "d3",
+                    "formatterOptions": {
+                        "specifier": ","
+                    },
+                    "align": "right"
+                },
+                {
+                    "heading": "24h ago",
+                    "label": "5",
+                    "sortable": false,
+                    "formatter": "d3",
+                    "formatterOptions": {
+                        "specifier": ","
+                    },
+                    "align": "right"
+                }
+            ]
+        },
+        {
+            "_id": "routing_kpi",
+            "widgetType": "table",
+            "title": "Routing KPIs",
+            "filterable": false,
+            "sortMode": "desc",
+            "sources": [
+                {
+                    "source": "route_data",
+                    "vertical": false
+                }
+            ],
+            "columns": [
+                {
+                    "heading": "Name",
+                    "label": "label",
+                    "sortable": false
+                },
+                {
+                    "heading": "Now",
+                    "label": "0",
+                    "sortable": false
+                },
+                {
+                    "heading": "1h ago",
+                    "label": "1",
+                    "sortable": false
+                },
+                {
+                    "heading": "3h ago",
+                    "label": "2",
+                    "sortable": false
+                },
+                {
+                    "heading": "6h ago",
+                    "label": "3",
+                    "sortable": false
+                },
+                {
+                    "heading": "12h ago",
+                    "label": "4",
+                    "sortable": false
+                },
+                {
+                    "heading": "24h ago",
+                    "label": "5",
+                    "sortable": false
+                }
+            ]
+        }
+    ]
+}

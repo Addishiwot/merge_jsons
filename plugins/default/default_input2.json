@@ -1,0 +1,284 @@
+{
+  "dashboards": [
+    {
+      "_id": "cre_health_check_dashboard",
+      "title": "Cloud Routing Engine",
+      "useTimePicker": false,
+      "apps": ["healthCheckViewer"],
+      "order": 0,
+      "tiles": [
+        {
+          "xSize": 10,
+          "ySize": 3,
+          "widget": "routing_kpi"
+        },
+        {
+          "xSize": 10,
+          "ySize": 3,
+          "widget": "interface_metrics_kpi",
+          "tSize": 60
+        }
+      ]
+    }
+  ],
+  "widgets": [
+    {
+      "_id": "routing_kpi",
+      "widgetType": "table",
+      "title": "Routing KPIs",
+      "filterable": false,
+      "sortMode": "desc",
+      "sources": [{ "source": "route_data", "vertical": false }],
+      "columns": [
+        {
+          "heading": "Name",
+          "label": "label",
+          "sortable": false
+        },
+        {
+          "heading": "Now",
+          "label": "0",
+          "sortable": false
+        },
+        {
+          "heading": "1h ago",
+          "label": "1",
+          "sortable": false
+        },
+        {
+          "heading": "3h ago",
+          "label": "2",
+          "sortable": false
+        },
+        {
+          "heading": "6h ago",
+          "label": "3",
+          "sortable": false
+        },
+        {
+          "heading": "12h ago",
+          "label": "4",
+          "sortable": false
+        },
+        {
+          "heading": "24h ago",
+          "label": "5",
+          "sortable": false
+        }
+      ]
+    },
+    {
+      "_id": "interface_metrics_kpi",
+      "widgetType": "table",
+      "title": "Interface Metrics KPIs",
+      "filterable": false,
+      "sortMode": "desc",
+      "sources": [{ "source": "interface_metrics_data", "vertical": false }],
+      "columns": [
+        {
+          "heading": "Name",
+          "label": "label",
+          "sortable": false
+        },
+        {
+          "heading": "Now",
+          "label": "0",
+          "sortable": false
+        },
+        {
+          "heading": "1h ago",
+          "label": "1",
+          "sortable": false
+        },
+        {
+          "heading": "3h ago",
+          "label": "2",
+          "sortable": false
+        },
+        {
+          "heading": "6h ago",
+          "label": "3",
+          "sortable": false
+        },
+        {
+          "heading": "12h ago",
+          "label": "4",
+          "sortable": false
+        },
+        {
+          "heading": "24h ago",
+          "label": "5",
+          "sortable": false
+        }
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "_id": "route_data",
+      "sourceType": "aggregation",
+      "method": "healthCheckViewer",
+      "sources": [
+        {
+          "_id": "Ipv4AdvertisedRoutes",
+          "sourceType": "prometheus",
+          "query": "(sum(cre_bgp_network_instance_messages_total{af='v4', via='kafka', type='update'}) by (instance)) - (sum(cre_bgp_network_instance_messages_total{af='v4', via='kafka', type='delete'}) by (instance))",
+          "label": "Ipv4AdvertisedRoutes for ",
+          "splitByLabelName": "instance",
+          "labelOrder": "prometheusLabelLast"
+        },
+        {
+          "_id": "Ipv6AdvertisedRoutes",
+          "sourceType": "prometheus",
+          "query": "(sum(cre_bgp_network_instance_messages_total{af='v6', via='kafka', type='update'}) by (instance)) - (sum(cre_bgp_network_instance_messages_total{af='v6', via='kafka', type='delete'}) by (instance))",
+          "label": "Ipv6AdvertisedRoutes for ",
+          "splitByLabelName": "instance",
+          "labelOrder": "prometheusLabelLast"
+        },
+        {
+          "_id": "ErrorRoutes",
+          "sourceType": "prometheus",
+          "query": "(sum(cre_bgp_global_messages_total{via='kafka', type='error'}) by (instance))",
+          "label": "ErrorRoutes for ",
+          "splitByLabelName": "instance",
+          "labelOrder": "prometheusLabelLast"
+        },
+        {
+          "_id": "Ipv4UpdateReqRate",
+          "sourceType": "prometheus",
+          "query": "sum(irate(cre_grpc_prefix_total{action='update', dst='ipv4', err_type='info', message='received update ipv4 prefixes num'}[2m])) or vector(0)",
+          "label": "IPv4 Advertisement"
+        },
+        {
+          "_id": "Ipv6UpdateReqRate",
+          "sourceType": "prometheus",
+          "query": "sum(irate(cre_grpc_prefix_total{action='update', dst='ipv6', err_type='info', message='received update ipv6 prefixes num'}[2m])) or vector(0)",
+          "label": "IPv6 Advertisement"
+        },
+        {
+          "_id": "Ipv4DeleteReqRate",
+          "sourceType": "prometheus",
+          "query": "sum(irate(cre_grpc_prefix_total{action='delete', dst='ipv4', err_type='info', message='received delete ipv4 prefixes num'}[2m])) or vector(0)",
+          "label": "IPv4 Withdrawal"
+        },
+        {
+          "_id": "Ipv6DeleteReqRate",
+          "sourceType": "prometheus",
+          "query": "sum(irate(cre_grpc_prefix_total{action='delete', dst='ipv6', err_type='info', message='received delete ipv6 prefixes num'}[2m])) or vector(0)",
+          "label": "IPv6 Withdrawal"
+        }
+      ]
+    },
+    {
+      "_id": "interface_metrics_data",
+      "sourceType": "aggregation",
+      "method": "healthCheckViewer",
+      "sources": [
+        {
+          "_id": "l2interfaceTransmittedBytes",
+          "sourceType": "prometheus",
+          "query": "sum(cre_l2_interface_transmitted_bytes_total{}) by (interface)",
+          "label": "l2 interface transmitted bytes ",
+          "splitByLabelName": "interface",
+          "labelOrder": "prometheusLabelLast"
+        },
+        {
+          "_id": "l2interfaceReceivedBytes",
+          "sourceType": "prometheus",
+          "query": "sum(cre_l2_interface_received_bytes_total{}) by (interface)",
+          "label": "l2 interface received bytes ",
+          "splitByLabelName": "interface",
+          "labelOrder": "prometheusLabelLast"
+        },
+        {
+          "_id": "l2interfaceTransmittedPackets",
+          "sourceType": "prometheus",
+          "query": "sum(cre_l2_interface_transmitted_packets_total{}) by (interface)",
+          "label": "l2 interface transmitted packets ",
+          "splitByLabelName": "interface",
+          "labelOrder": "prometheusLabelLast"
+        },
+        {
+          "_id": "l2interfaceReceivedPackets",
+          "sourceType": "prometheus",
+          "query": "sum(cre_l2_interface_received_packets_total{}) by (interface)",
+          "label": "l2 interface received packets ",
+          "splitByLabelName": "interface",
+          "labelOrder": "prometheusLabelLast"
+        },
+        {
+          "_id": "l2interfaceTransmittedDropPackets",
+          "sourceType": "prometheus",
+          "query": "sum(cre_l2_interface_transmit_drop_packets_total{}) by (interface)",
+          "label": "l2 interface transmit drop packets ",
+          "splitByLabelName": "interface",
+          "labelOrder": "prometheusLabelLast"
+        },
+        {
+          "_id": "l2interfaceReceivedDropPackets",
+          "sourceType": "prometheus",
+          "query": "sum(cre_l2_interface_received_drop_packets_total{}) by (interface)",
+          "label": "l2 interface received drop packets ",
+          "splitByLabelName": "interface",
+          "labelOrder": "prometheusLabelLast"
+        },
+        {
+          "_id": "l3interfaceTransmittedBytes",
+          "sourceType": "prometheus",
+          "query": "sum(cre_l3_interface_transmitted_bytes_total{}) by (interface)",
+          "label": "l3 interface transmitted bytes ",
+          "splitByLabelName": "interface",
+          "labelOrder": "prometheusLabelLast"
+        },
+        {
+          "_id": "l3interfaceReceivedBytes",
+          "sourceType": "prometheus",
+          "query": "sum(cre_l3_interface_received_bytes_total{}) by (interface)",
+          "label": "l3 interface received bytes ",
+          "splitByLabelName": "interface",
+          "labelOrder": "prometheusLabelLast"
+        },
+        {
+          "_id": "l3interfaceTransmittedPackets",
+          "sourceType": "prometheus",
+          "query": "sum(cre_l3_interface_transmitted_packets_total{}) by (interface)",
+          "label": "l3 interface transmitted packets ",
+          "splitByLabelName": "interface",
+          "labelOrder": "prometheusLabelLast"
+        },
+        {
+          "_id": "l3interfaceReceivedPackets",
+          "sourceType": "prometheus",
+          "query": "sum(cre_l3_interface_received_packets_total{}) by (interface)",
+          "label": "l3 interface received packets ",
+          "splitByLabelName": "interface",
+          "labelOrder": "prometheusLabelLast"
+        },
+        {
+          "_id": "l3interfaceTransmittedDropPackets",
+          "sourceType": "prometheus",
+          "query": "sum(cre_l3_interface_transmit_drop_packets_total{}) by (interface)",
+          "label": "l3 interface transmit drop packets ",
+          "splitByLabelName": "interface",
+          "labelOrder": "prometheusLabelLast"
+        },
+        {
+          "_id": "l3interfaceReceivedDropPackets",
+          "sourceType": "prometheus",
+          "query": "sum(cre_l3_interface_received_drop_packets_total{}) by (interface)",
+          "label": "l3 interface received drop packets ",
+          "splitByLabelName": "interface",
+          "labelOrder": "prometheusLabelLast"
+        },
+        {
+          "_id": "l3interfaceReceivedReassemblyPackets",
+          "sourceType": "prometheus",
+          "query": "sum(cre_l3_interface_received_reassembly_packets_total{}) by (interface)",
+          "label": "l3 interface received reassembly packets ",
+          "splitByLabelName": "interface",
+          "labelOrder": "prometheusLabelLast"
+        }
+      ]
+    }
+  ]
+}
