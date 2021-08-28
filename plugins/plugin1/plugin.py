@@ -7,7 +7,7 @@ class Plugin:
         
         self.json1 = os.path.join(self._dir_name, 'input1.json')
         self.json2 = os.path.join(self._dir_name, 'input2.json')
-        self.result = os.path.join(self._dir_name, 'ouptut.json') 
+        self.result = os.path.join(self._dir_name, 'output.json') 
         self.schema = {
             "properties":{
                 "dashboards":{

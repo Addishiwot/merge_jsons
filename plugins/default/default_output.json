@@ -15,7 +15,7 @@
                     "ySize": 3,
                     "widget": "interface_metrics_kpi",
                     "addishiwot": 300,
-                    "roman": 6000
+                    "tSize": 60
                 },
                 {
                     "xSize": 10,
@@ -37,7 +37,7 @@
                     "xSize": 10,
                     "ySize": 3,
                     "widget": "interface_metrics_kpi",
-                    "addishiwot": 300
+                    "zSize": 300
                 }
             ]
         }
