@@ -1,10 +1,13 @@
-import json
-from jsonmerge import Merger # type: ignore
+# buit in modules
 import importlib
+import json
 import pathlib
 from typing import Union, List, Tuple
 
-P = Union[str, pathlib.Path]
+# third party
+from jsonmerge import Merger # type: ignore
+
+Path = Union[str, pathlib.Path]
 
 
 class Core:
@@ -13,7 +16,7 @@ class Core:
         if plugins:
             self._plugins = [
                 importlib.import_module(plugin, '.').Plugin() for plugin in plugins
-                ]
+                ] 
         else:
             # import the default plugin
             self._plugins = [
@@ -21,30 +24,30 @@ class Core:
                 ]
             
     @staticmethod
-    def _read_json(path: P):
+    def _read_json(path: Path):
         with open(path) as f:
             return json.load(f)
     
     @staticmethod
     def _write(
         data: dict, 
-        output_file_path: P
+        output_file_path: Path
         ):
-        """ dumps JSON formatted stream to a given file
+        """ dumps JSON formatted string to a given file
 
         Args:
             data (dict): JSON formatted string
-            output_file_path (P): path to a file. if the file does not exit, it will be created
+            output_file_path (P): path to a file. 
         """
         with open(output_file_path, 'w') as f:
             json.dump(data, f, indent=4)
             
     def _process_json(
         self,
-        path_to_json1: P, 
-        path_to_json2: P) -> Tuple[dict, dict]:
+        path_to_json1: Path, 
+        path_to_json2: Path) -> Tuple[dict, dict]:
         """
-        reads the contents of jsons and retruns.
+        reads the contents of jsons and then retruns it.
         Args:
             path_to_json2 (P): path to the first json file
             path_to_json2 (P): path to the the second json file
